@@ -1,0 +1,214 @@
+:root {
+    --color-green: rgba(204, 231, 197, 0.49);
+    --color-red: rgba(220, 70, 70, 0.44);
+    --arrow-up: "↑";
+    --arrow-down: "↓";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 20px 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header {
+    cursor: pointer;
+}
+
+.pagination_container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.pagination {
+    display: flex;
+    gap: 4px;
+}
+
+.current_page {
+    background-color: var(--color-red);
+    display: flex;
+    align-self: center;
+    font-size: 16px;
+    padding: 4px 8px;
+}
+
+.page_button {
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    padding: 4px 20px;
+}
+
+.page_summary {
+    margin-top: 6px;
+    gap: 20px;
+    display: flex;
+}
+
+.new_book {
+    margin-bottom: 20px;
+}
+
+.new_book > form {
+    gap: 10px;
+    display: flex;
+}
+
+.new_book > h2 {
+    margin-bottom: 10px;
+}
+
+.input_wrapper {
+    position: relative;
+}
+
+.required_label {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 0;
+}
+
+.new_book_input {
+    background: none;
+    position: relative;
+    padding: 10px 8px;
+    z-index: 1;
+}
+
+.new_book_button {
+    cursor: pointer;
+    padding: 12px 8px;
+    border: none;
+}
+
+.table_header {
+    margin-bottom: 10px;
+}
+
+.table_row, .table_header {
+    position: relative;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr 120px 1fr 1fr 200px;
+    gap: 6px;
+}
+
+.pencil {
+    position: absolute;
+    display: none;
+}
+
+.table_row:hover > .pencil {
+    display: block;
+    scale: 0.8;
+}
+
+.sort_button {
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    padding: 4px 10px;
+}
+
+.table_row:nth-child(odd) {
+    background-color: var(--color-green);
+}
+
+.table_cell {
+    padding: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.table_cell_input {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    padding: 6px;
+}
+
+.price_input_wrapper {
+    gap: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.price_input_wrapper button {
+    border: none;
+    cursor: pointer;
+}
+
+.price_input {
+    border: none;
+    width: 80px;
+}
+
+
+.pagination_container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.page_size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page_size_selector {
+    cursor: pointer;
+    padding: 8px 30px;
+    border: none;
+
+}
+
+.page_size_label {
+    margin-top: 6px;;
+}
+
+.button_active {
+    background-color: var(--color-red);
+}
+
+.asc::after, .desc::after {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.desc::after {
+    content: var(--arrow-up);
+}
+
+.asc::after {
+    content: var(--arrow-down);
+}
+
+.numeric {
+    text-align: right;
+}
+
+.editable:hover {
+    cursor: pointer;
+    background-color: var(--color-red);
+}
+
+.hidden {
+    display: none;
+}
+

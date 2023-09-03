@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+
+<div class="header_container">
+    <h1 class="header" onclick="goHome()">Books</h1>
+    <a th:if="${authed}" href="/logout">Logout</a>
+    <a th:unless="${authed}" href="/login">Login as admin</a>
+</div>
+
+<div class="pagination_container">
+    <div>
+        <div class="pagination">
+            <button class="page_button" onclick="jumpToPage(0)">|←</button>
+            <button class="page_button" onclick="incPageBy(-1)" th:disabled="${page < 1}">prev</button>
+            <div class="current_page" th:text="${page + 1}"></div>
+            <button class="page_button" onclick="incPageBy(1)" th:disabled="${page + 1 >= pages}">next</button>
+            <button class="page_button" th:onclick="'jumpToPage(\'' + ${pages - 1} + '\')'">→|</button>
+        </div>
+        <div class="page_summary">
+            <div th:text="${'pages ' + pages}"></div>
+            <div th:text="${'books ' + bookCount}"></div>
+        </div>
+    </div>
+
+    <div class="page_size">
+        <select class="page_size_selector" onchange="setPageSize()">
+            <option th:selected="${searchParams.size() == 10}" value="10">10</option>
+            <option th:selected="${searchParams.size() == 20}" value="20">20</option>
+            <option th:selected="${searchParams.size() == 50}" value="50">50</option>
+            <option th:selected="${searchParams.size() == 100}" value="100">100</option>
+        </select>
+        <label class="page_size_label">page size</label>
+    </div>
+</div>
+
+<div class="new_book">
+    <h2>Add new</h2>
+    <form action="/admin/books/add" method="POST">
+        <div class="input_wrapper">
+            <label class="required_label">*</label>
+            <input class="new_book_input" type="text" name="title" placeholder="title" required>
+        </div>
+        <div class="input_wrapper">
+            <label class="required_label">*</label>
+            <input class="new_book_input" type="text" name="author" required placeholder="author">
+        </div>
+        <div class="input_wrapper">
+            <label class="required_label">*</label>
+            <input class="new_book_input" type="text" name="releaseYear" placeholder="release year" pattern="[0-9]+" required>
+        </div>
+        <input class="new_book_input" type="text" name="price" pattern="[0-9]+(\.[0-9]+)?" placeholder="0.01">
+        <button class="new_book_button" type="submit">save</button>
+    </form>
+</div>
+
+<div class="table_header">
+    <button class="sort_button" data-sort="id" onclick="selectSort(this)">id</button>
+    <button class="sort_button" data-sort="title" onclick="selectSort(this)">title</button>
+    <button class="sort_button" data-sort="author" onclick="selectSort(this)">author</button>
+    <button class="sort_button" data-sort="releaseYear" onclick="selectSort(this)">release year</button>
+    <button class="sort_button" data-sort="updatedAt" onclick="selectSort(this)">updated</button>
+    <button class="sort_button" data-sort="createdAt" onclick="selectSort(this)">added</button>
+    <button class="sort_button" data-sort="price" onclick="selectSort(this)">price</button>
+</div>
+
+
+<div th:class="${authed} ? 'table_row editable' : 'table_row'" th:each="book: ${books}">
+    <div th:if="${authed}" class="pencil">
+        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/>
+        </svg>
+    </div>
+    <div class="table_cell numeric id" th:text="${book.id()}">
+    </div>
+    <div class="table_cell" th:text="${book.title()}"></div>
+    <div class="table_cell" th:text="${book.author()}"></div>
+    <div class="table_cell numeric" th:text="${book.releaseYear()}"></div>
+    <div class="table_cell numeric" th:text="${book.updatedAt()}"></div>
+    <div class="table_cell numeric" th:text="${book.createdAt()}"></div>
+    <div class="table_cell numeric price" th:text="${book.price()}"></div>
+    <div class="table_cell_input hidden">
+        <form action="/admin/books/update" method="POST">
+            <div class="price_input_wrapper">
+                <input type="hidden" name="id" th:value="${book.id()}"/>
+                <input class="price_input" name="price" th:value="${book.price()}"/>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    const page = /*[[${page}]]*/ 0;
+    let size = /*[[${searchParams.size()}]]*/ null;
+    let sortBy = /*[[${searchParams.sortBy()}]]*/ null;
+    let order = /*[[${searchParams.order()}]]*/ null;
+
+</script>
+<script src="./script.js"></script>
+
+</body>
+</html>
