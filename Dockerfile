@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/bookstore-1.0.0 app.jar
+COPY ./bookstore-1.0.0.jar app.jar
 
 EXPOSE 8080
 
