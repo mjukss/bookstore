@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,66 +40,32 @@ public class BookService {
                 Optional.ofNullable(searchParams.size()).orElse(50)
         ).withSort(sort);
 
-//        var foo = searchParams.updatedAfter() == null ? bookRepository.findAll(pageable) : bookRepository.findAllUpdatedAfter(searchParams.updatedAfter(), pageable);
+//        var books = searchParams.updatedAfter() == null ? bookRepository.findAll(pageable) : bookRepository.findAllUpdatedAfter(searchParams.updatedAfter(), pageable);
 
         var books = Optional.ofNullable(searchParams.updatedAfter())
                 .map(after -> bookRepository.findAllUpdatedAfter(after, pageable))
                 .orElseGet(() -> bookRepository.findAll(pageable));
 
-
-        return books.map(
-                book -> new BookApiDto(
-                        book.getId(),
-                        book.getTitle(),
-                        book.getAuthor(),
-                        book.getReleaseYear(),
-                        book.getCreatedAt(),
-                        book.getUpdatedAt(),
-                        book.getPrice()
-                )
-        );
+        return books.map(Book::toBookApiDto);
     }
 
     @CacheEvict(value = "books", allEntries = true)
-    public Long updatePrice(UpdateBookDto book) {
+    public void updatePrice(UpdateBookDto book) {
         Book entity = bookRepository.findById(book.id()).orElseThrow();
         entity.setPrice(book.price());
         entity.setUpdatedAt(Instant.now());
 
-        return bookRepository.save(entity).getId();
+        bookRepository.save(entity);
     }
 
     @CacheEvict(value = "books", allEntries = true)
-    public Long save(BookApiDto book) {
+    public void save(BookViewDto book) {
         Book entity = new Book(book.title(), book.author(), book.price(), book.releaseYear(), Instant.now(), Instant.now());
 
-        return bookRepository.save(entity).getId();
+        bookRepository.save(entity);
     }
 
-    @CacheEvict(value = "books", allEntries = true)
-    public Long save(BookViewDto book) {
-        Book entity = new Book(book.title(), book.author(), book.price(), book.releaseYear(), Instant.now(), Instant.now());
-
-        return bookRepository.save(entity).getId();
-    }
-
-    @CacheEvict(value = "books", allEntries = true)
-    public Long delete(Long id) {
-        bookRepository.delete(bookRepository.findById(id).orElseThrow());
-
-        return id;
-    }
-
-    @CacheEvict(value = "books", allEntries = true)
-    public List<Long> saveAll(List<BookApiDto> books) {
-        return books.stream().map(book -> {
-                    Book entity = new Book(book.title(), book.author(), book.price(), book.releaseYear(), Instant.now(), Instant.now());
-                    return bookRepository.save(entity).getId();
-                }
-        ).toList();
-    }
-
-    public void addToModel(Model model, Page<BookViewDto> books, SearchParamsDto searchParams) {
+    public void buildModel(Model model, Page<BookViewDto> books, SearchParamsDto searchParams) {
         var page = Optional.ofNullable(searchParams.page()).orElse(0);
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var authed = Optional.ofNullable(auth).filter(a -> !Objects.equals(a.getName(), "anonymousUser")).isPresent();

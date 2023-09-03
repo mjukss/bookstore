@@ -25,7 +25,7 @@ public class BookController {
     public String index(@Valid SearchParamsDto searchParams, Model model) {
         var books = bookService.findAll(searchParams).map(BookApiDto::toBookView);
 
-        bookService.addToModel(model, books, searchParams);
+        bookService.buildModel(model, books, searchParams);
 
         return "index";
     }

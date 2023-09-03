@@ -1,5 +1,6 @@
 package com.bookstore.model;
 
+import com.bookstore.dto.BookApiDto;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -69,5 +70,17 @@ public class Book {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public BookApiDto toBookApiDto() {
+        return new BookApiDto(
+                getId(),
+                getTitle(),
+                getAuthor(),
+                getReleaseYear(),
+                getCreatedAt(),
+                getUpdatedAt(),
+                getPrice()
+        );
     }
 }
