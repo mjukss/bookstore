@@ -1,6 +1,6 @@
 package com.bookstore.controller.api;
 
-import com.bookstore.dto.BookApiDto;
+import com.bookstore.dto.BookDto;
 import com.bookstore.dto.SearchParamsDto;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ public class BookControllerApi {
     }
 
     @GetMapping("/admin/api/books")
-    public Page<BookApiDto> list(@Valid SearchParamsDto searchParams) {
+    public Page<BookDto> list(@Valid SearchParamsDto searchParams) {
         return bookService.findAll(searchParams);
     }
 }

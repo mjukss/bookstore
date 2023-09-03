@@ -26,5 +26,4 @@ public class UserService implements UserDetailsService {
                 new ArrayList<>()
         );
     }
-
 }

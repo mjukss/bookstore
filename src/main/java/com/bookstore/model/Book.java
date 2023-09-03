@@ -1,11 +1,10 @@
 package com.bookstore.model;
 
-import com.bookstore.dto.BookApiDto;
+import com.bookstore.dto.BookDto;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Optional;
 
 @Entity(name = "books")
 public class Book {
@@ -27,6 +26,16 @@ public class Book {
     }
 
     public Book(String title, String author, BigDecimal price, String releaseYear, Instant createdAt, Instant updatedAt) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.releaseYear = releaseYear;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Book(Long id, String title, String author, BigDecimal price, String releaseYear, Instant createdAt, Instant updatedAt) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
@@ -72,8 +81,8 @@ public class Book {
         return updatedAt;
     }
 
-    public BookApiDto toBookApiDto() {
-        return new BookApiDto(
+    public BookDto toBookApiDto() {
+        return new BookDto(
                 getId(),
                 getTitle(),
                 getAuthor(),

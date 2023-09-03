@@ -89,8 +89,8 @@
     <div class="table_cell" th:text="${book.title()}"></div>
     <div class="table_cell" th:text="${book.author()}"></div>
     <div class="table_cell numeric" th:text="${book.releaseYear()}"></div>
-    <div class="table_cell numeric" th:text="${book.updatedAt()}"></div>
-    <div class="table_cell numeric" th:text="${book.createdAt()}"></div>
+    <div class="table_cell numeric" th:text="${book.updatedAtString()}"></div>
+    <div class="table_cell numeric" th:text="${book.createdAtString()}"></div>
     <div class="table_cell numeric price" th:text="${book.price()}"></div>
     <div class="table_cell_input hidden">
         <form action="/admin/books/update" method="POST">

@@ -7,13 +7,12 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
-public record BookApiDto(
+public record BookDto(
         Long id,
         @NotNull
         @NotBlank
@@ -33,17 +32,17 @@ public record BookApiDto(
         @DecimalMax(value = "9999999.99")
         BigDecimal price
 ) {
-    public BookViewDto toBookView() {
-        var format = ofPattern("H:mm d MMM yyyy", Locale.US);
 
-        return new BookViewDto(
-                id,
-                title,
-                author,
-                releaseYear,
-                createdAt().atZone(UTC).format(format),
-                updatedAt().atZone(UTC).format(format),
-                price
-        );
+    public String createdAtString() {
+        return toDateString(createdAt);
+    }
+
+    public String updatedAtString() {
+        return toDateString(updatedAt);
+    }
+
+    private String toDateString(Instant timestamp) {
+        var format = ofPattern("H:mm d MMM yyyy", Locale.US);
+        return timestamp.atZone(UTC).format(format);
     }
 }

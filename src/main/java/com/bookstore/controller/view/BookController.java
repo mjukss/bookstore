@@ -1,7 +1,6 @@
 package com.bookstore.controller.view;
 
-import com.bookstore.dto.BookApiDto;
-import com.bookstore.dto.BookViewDto;
+import com.bookstore.dto.BookDto;
 import com.bookstore.dto.SearchParamsDto;
 import com.bookstore.dto.UpdateBookDto;
 import com.bookstore.service.BookService;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class BookController {
+
     private final BookService bookService;
 
     public BookController(BookService bookService) {
@@ -23,7 +23,7 @@ public class BookController {
 
     @GetMapping("/")
     public String index(@Valid SearchParamsDto searchParams, Model model) {
-        var books = bookService.findAll(searchParams).map(BookApiDto::toBookView);
+        var books = bookService.findAll(searchParams);
 
         bookService.buildModel(model, books, searchParams);
 
@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @PostMapping(path = "/admin/books/add")
-    public String addBook(@Valid BookViewDto book) {
+    public String addBook(@Valid BookDto book) {
         bookService.save(book);
 
         return "redirect:/";
