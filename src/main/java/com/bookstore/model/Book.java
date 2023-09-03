@@ -13,7 +13,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_generator")
     @SequenceGenerator(name = "book_generator", sequenceName = "book_sequence", allocationSize = 1)
     private Long id;
-
     @Column(unique = true)
     private String title;
     private String author;
@@ -34,16 +33,6 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
-    public Book(Long id, String title, String author, BigDecimal price, String releaseYear, Instant createdAt, Instant updatedAt) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.price = price;
-        this.releaseYear = releaseYear;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
@@ -51,7 +40,6 @@ public class Book {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
     public Long getId() {
         return id;

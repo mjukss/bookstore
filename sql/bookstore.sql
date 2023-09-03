@@ -5,18 +5,14 @@ CREATE SEQUENCE user_sequence INCREMENT by 1;
 
 CREATE TABLE users
 (
-    id            BIGINT    DEFAULT nextval('user_sequence') PRIMARY KEY,
+    id            BIGINT DEFAULT nextval('user_sequence') PRIMARY KEY,
     username      VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    last_login    TIMESTAMP,
-    is_admin      BOOLEAN   DEFAULT FALSE,
-    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    password_hash VARCHAR(255) NOT NULL
 );
 
--- username: admin; password: password
-INSERT INTO users (username, password_hash, is_admin)
-VALUES ('admin', '$2a$10$p8jxVtmibgMSFWw9/EIQVeXr0pg0ss57mIBbicJnezdTQLdYsRADe', true);
+-- USERNAME: admin; PASSWORD: password
+INSERT INTO users (username, password_hash)
+VALUES ('admin', '$2a$10$p8jxVtmibgMSFWw9/EIQVeXr0pg0ss57mIBbicJnezdTQLdYsRADe');
 
 CREATE SEQUENCE book_sequence INCREMENT by 1;
 
