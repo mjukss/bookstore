@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Bookstore</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div class="new_book">
+<div th:if="${authed}" class="new_book">
     <h2>Add new</h2>
     <form action="/admin/books/add" method="POST">
         <div class="input_wrapper">
@@ -58,12 +58,14 @@
         </div>
         <div class="input_wrapper">
             <label class="required_label">*</label>
-            <input class="new_book_input" type="text" name="releaseYear" placeholder="release year" pattern="[0-9]+" required>
+            <input class="new_book_input" type="text" name="releaseYear" placeholder="release year" pattern="[0-9]+"
+                   required>
         </div>
         <input class="new_book_input" type="text" name="price" pattern="[0-9]+(\.[0-9]+)?" placeholder="0.01">
         <button class="new_book_button" type="submit">save</button>
     </form>
 </div>
+
 
 <div class="table_header">
     <button class="sort_button" data-sort="id" onclick="selectSort(this)">id</button>
