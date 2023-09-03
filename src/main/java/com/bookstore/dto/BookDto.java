@@ -23,11 +23,8 @@ public record BookDto(
         @NotNull
         @NotBlank
         String releaseYear,
-        @NotNull
         Instant createdAt,
-        @NotNull
         Instant updatedAt,
-        @NotNull
         @DecimalMin(value = "0.01")
         @DecimalMax(value = "9999999.99")
         BigDecimal price

@@ -1,11 +1,12 @@
-1. Introduction
-   Overview
+# Bookstore
+
+## 1. Overview
 
 The Bookstore application, is Java Spring Boot web application that provides access to a directory of books.
 Additionally, it offers admin users special privileges for managing books. The application stores data in a PostgreSQL
 database and uses in-memory caching to improve performance.
 
-Technology Stack
+### Technology Stack:
 
     Java Spring Boot
     PostgreSQL
@@ -13,15 +14,15 @@ Technology Stack
     In-Memory Caching (Caffeine)
     ThymeLeaf
 
-2. Getting Started
+## 2. Getting Started
 
-Prerequisites:
+### Prerequisites:
 
     Unix based operating system
     Git
     Docker
 
-**To run the application, follow these steps:**
+### To run the application, follow these steps:
 
 Clone the Git repository.
 
@@ -39,10 +40,10 @@ Start application by running docker-compose file:
 This will start PostgreSQL container and Bookstore application
 
 ```bash
-docker-compose up --build
+docker compose up
 ```
 
-**Accessing the Application UI**
+### Accessing the Application UI
 
 Once the Docker containers are up and running, you can access the application locally:
 ```
@@ -55,7 +56,7 @@ Alternatively you can use already deployed application:
 http://135.181.157.42
 ```
 
-**Accessing the Application API**
+### Accessing the Application API
 
 Log in as admin user and save cookie in `bookstore-cookies.txt` file:
 ```bash
@@ -63,19 +64,29 @@ Log in as admin user and save cookie in `bookstore-cookies.txt` file:
 ```
 
 Retrieve data:
+
 ```bash
 curl -b bookstore-cookies.txt "http://http://localhost:80/admin/api/books?page=0&size=999&updatedAfter=2023-07-31T18:39:00.000Z&order=asc&sortBy=title"
 ```
+
+Available parameters
+
+    page: Integer
+    size: Integer (book count per page)
+    updatedAfter: Instant (example 2023-07-31T18:39:00.000Z)
+    order: asc | desc
+    sortBy: id | title | author | updatedAt | createdAt
+
        
-Remove saved cookies
+Remove cookies
 ```bash
 rm bookstore-cookies.txt
 ```
 
 
-3. Database Schema
+## 3. Database Schema
  
-**Users Table**
+### Users Table
 
 The users table is used for user management and consists of the following columns:
 
@@ -83,7 +94,7 @@ The users table is used for user management and consists of the following column
     username VARCHAR
     password_hash VARCHAR
 
-**Books Table**
+### Books Table
 
 The books table stores book-related data and includes the following columns:
 
@@ -95,28 +106,28 @@ The books table stores book-related data and includes the following columns:
     created_at TIMESTAMP
     updated_at TIMESTAMP
 
-4. Data Initialization
+## 4. Data Initialization
 
-**Upon starting the PostgreSQL container, the following data is automatically initialized:**
+### Upon starting the PostgreSQL container, the following data is automatically initialized
 
 An admin user with the username `admin` and password `password` is created.
 The books table is populated with 60 initial book entries.
 
-5. Key Features
+## 5. Key Features
 
-**UI**
+### UI
 
 The application provides a user-friendly interface for accessing and managing the book directory.
 
-**API**
+### API
 
 Admin users can access api to retrieve books and additionally apply timestamp filtering and sorting result by id, title, author, release year, created at timestamp, updated at timestamp or price 
 
-**Book Management**
+### Book Management
 
 Admin users can update book prices add new books to the system.
 
-**Caching**
+### Caching
 
 In-memory caching is implemented to optimize performance by reducing database queries.
 Caches are invalidated on POST endpoints to ensure data consistency.
