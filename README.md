@@ -61,7 +61,7 @@ http://135.181.157.42
 Retrieve data:
 
 ```bash
-curl "http://http://localhost:80/api/books?page=0&size=999&updatedAfter=2023-07-31T18:39:00.000Z&order=asc&sortBy=title"
+curl "http://localhost:80/api/books?page=0&size=999&updatedAfter=2023-07-31T18:39:00.000Z&order=asc&sortBy=title"
 ```
 
 Available parameters
