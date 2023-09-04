@@ -21,7 +21,7 @@ public class BookControllerApi {
         this.bookService = bookService;
     }
 
-    @GetMapping("/admin/api/books")
+    @GetMapping("/api/books")
     public Page<BookDto> list(@Valid SearchParamsDto searchParams) {
         return bookService.findAll(searchParams);
     }

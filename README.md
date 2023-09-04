@@ -58,15 +58,10 @@ http://135.181.157.42
 
 ### Accessing the Application API
 
-Log in as admin user and save cookie in `bookstore-cookies.txt` file:
-```bash
- curl -X POST -c bookstore-cookies.txt "http://localhost:80/login?username=admin&password=password"
-```
-
 Retrieve data:
 
 ```bash
-curl -b bookstore-cookies.txt "http://http://localhost:80/admin/api/books?page=0&size=999&updatedAfter=2023-07-31T18:39:00.000Z&order=asc&sortBy=title"
+curl "http://http://localhost:80/api/books?page=0&size=999&updatedAfter=2023-07-31T18:39:00.000Z&order=asc&sortBy=title"
 ```
 
 Available parameters
@@ -77,11 +72,6 @@ Available parameters
     order: asc | desc
     sortBy: id | title | author | updatedAt | createdAt
 
-       
-Remove cookies
-```bash
-rm bookstore-cookies.txt
-```
 
 
 ## 3. Database Schema
